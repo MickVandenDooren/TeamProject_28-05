@@ -9,15 +9,41 @@ public class IntArrayTools {
     Scanner scanner = new Scanner(System.in);
     public int answer=-1;
     public boolean ascend;
+    public int counter = 0;
+    public boolean descend;
+    public int searchNumber;
+    public boolean checkNumber;
 
     public void startProgram(){
         generateNumbers();
-        isSortedAB(ArrayNumbers);
         question();
         isSorting(ArrayNumbers);
         printArray(ArrayNumbers);
-        isSortedAB(ArrayNumbers);
+        isSorted(ArrayNumbers);
+        chopSearch();
     }
+
+    private void chopSearch(){
+
+
+
+        System.out.println("Give a number you want to search for between 1-10: ");
+        searchNumber = scanner.nextInt();
+        for (int i = 0; i < ArrayNumbers.length; i++) {
+            if (searchNumber == ArrayNumbers[i]) {
+                counter++;
+            }
+            if (counter > 0) {
+                checkNumber = true;
+            } else {
+                checkNumber = false;
+            }
+
+        }
+        System.out.println("Is your number in the array? " + checkNumber);
+    }
+
+
 
     private void generateNumbers(){
         Random generator = new Random();
@@ -27,22 +53,39 @@ public class IntArrayTools {
         }
     }
 
-    public void isSortedAB(int[] array) {
+    public void isSorted(int[] array) {
 
         for (int i = 0; i < array.length; i++) {
-            if (array[i]<array[i+1]){
-                ascend = true;
-            }else{
-                ascend = false;
-            }
+            for (int j = i + 1; j < array.length; j++)
 
-            System.out.println("Array Ascending?" + ascend);
-
+                if (array[i]<array[j]){
+                    counter++;
+                }
         }
+        if (counter > array.length -1){
+            ascend = true;
+        }else{
+            ascend = false;
+        }
+        System.out.println("\nArray Ascending? " + ascend);
+        counter = 0;
+
+        for (int i = 0; i < array.length; i++) {
+            for (int j = i + 1; j < array.length; j++)
+
+                if (array[i]>array[j]){
+                    counter++;
+                }
+        }
+        if (counter > array.length -1){
+            descend = true;
+        }else{
+            descend = false;
+        }
+        System.out.println("Array Descending? " + descend);
     }
 
     private void question(){
-
 
         printArray(ArrayNumbers);
         System.out.println("");
@@ -64,7 +107,7 @@ public class IntArrayTools {
     }
 
     private void isSorting(int[] array){
-                        // Ascending array
+        // Ascending array
         if (answer == 1) {
             for (int i = 0; i < array.length; i++) {
                 for (int j = i + 1; j < array.length; j++) {
